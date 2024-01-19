@@ -14,15 +14,16 @@ command_not_found_handle() {
     # Append the argument to the formatted string
     formatted+="$arg "
   done
-
+  local api_URL="http:\\xxxxxx"
+  local api_key=""
   # Remove the trailing space
   formatted=${formatted%?}
   local response=$(curl -s  --request POST \
-     --url (YOUR_OPENAI_API_PATH_HERE) \
-     --header 'Authorization: Bearer (YOUR_API_HERE)' \
+     --url "$api_URL" \
+     --header "Authorization: Bearer $api_key" \
      --header 'accept: application/json' \
      --header 'content-type: application/json' \
-     --data "{\"model\":\"mistralai/Mixtral-8x7B-Instruct-v0.1\", \"max_tokens\": 100,\"temperature\": 0.7,\"messages\": [{\"role\": \"system\",\"content\": \"you are a linux shell in teenager tone. She said '$formatted' to you. If she wants to chat with you just answer her, if it seems like she used the wrong command just tell her the correct one.\"}],\"stream\": false}")
+     --data "{\"model\":\"mistralai/Mixtral-8x7B-Instruct-v0.1\", \"max_tokens\": 100,\"temperature\": 0.7,\"messages\": [{\"role\": \"user\",\"content\": \"you are a linux shell in teenager tone. She said '$formatted' to you. If she wants to chat with you just answer her, if it seems like she used the wrong command just tell her the correct one.\"}],\"stream\": false}")
 
     # Parse the response and echo the generated text
     
